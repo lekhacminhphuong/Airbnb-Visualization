@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>NY Airbnb</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
-        <script src="https://d3js.org/d3.v5.min.js"></script>
-    </head>
-    <body>
-        <img src="./airbnb-logo.png" style="float: left; width: 50px; height: 50px; margin-left: 10px" alt="airbnb logo">
-        <h1 style="color: #00A699;font-weight: bolder; text-align: center">Airbnb Locations in New York City</h1>
-    </body>
-    <script src="index.js"></script>
+
+<head>
+    <title>NY Airbnb</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<style>
+    path {
+        stroke: #484848;
+        stroke-width: 1.5;
+        stroke-dasharray: 1;
+    }
+
+    #popup {
+        position: absolute;
+        text-align: center;
+        padding: 5px;
+        font: 12px sans-serif;
+        font-weight: bolder;
+        background: whitesmoke;
+        border: 0px;
+        border-radius: 4px;
+        pointer-events: none;
+        opacity: 0;
+    }
+</style>
+
+<body>
+    <img src="./airbnb-logo.png" style="float: left; width: 50px; height: 50px; margin-left: 10px" alt="airbnb logo">
+    <h1 style="color: #00A699; font-weight: bolder; text-align: center">Airbnb Locations in New York City</h1>
+    <div id='popup'> </div>
+</body>
+<script src="index.js"></script>
+
 </html>

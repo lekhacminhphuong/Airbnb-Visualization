@@ -11,10 +11,9 @@ const svg = d3.select("body").append('svg')
 // append g to the svg
 var neighborhoods = svg.append('g')
 
-// neighborhoods.json taken from rat map example
 d3.json('nygeo.json').then(function (data) {
 
-    d3.csv('data.csv').then(function (pointData) {
+    d3.csv('data.csv').then(function (locationData) {
 
         // create NY map
         const albersProj = d3.geoAlbers()
@@ -23,10 +22,9 @@ d3.json('nygeo.json').then(function (data) {
             .center([0, 40.7128])
             .translate([measurements.width / 2, measurements.height / 2]);
 
-        // this code shows what albersProj really does
-        let point = pointData[0]
-        let arr = [point['long'], point['lat']]
-        albersProj(arr)
+        // albersProj does:
+        let locationPoint = locationData[0]
+        albersProj([locationPoint['long'], locationPoint['lat']])
 
         // create path
         const geoPath = d3.geoPath()
@@ -38,25 +36,47 @@ d3.json('nygeo.json').then(function (data) {
             .append('path')
             .attr('fill', '#ccc')
             .attr('d', geoPath)
+            .on("mouseenter", function (d) {
+                d3.select(this)
+                    .style("stroke-width", 1.5)
+                    .style("stroke-dasharray", 0)
 
-        // plots circles on the boston map
+                d3.select("#popup")
+                    .transition()
+                    .style("opacity", 1)
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY) + "px")
+                    .text(d.properties.name)
+
+            })
+            .on("mouseleave", function (d) {
+                d3.select(this)
+                    .style("stroke-width", .25)
+                    .style("stroke-dasharray", 1)
+
+                d3.select("#cpopupountyText")
+                    .transition()
+                    .style("opacity", 0);
+            });
+
+        // plots locations' circles on the NY map
         neighborhoods.selectAll('.circle')
-            .data(pointData)
+            .data(locationData)
             .enter()
             .append('circle')
             .attr('cx', function (d) {
-                let scaledPoints = albersProj([d['longitude'], d['latitude']])
-                return scaledPoints[0]
+                let points = albersProj([d['longitude'], d['latitude']])
+                return points[0]
             })
             .attr('cy', function (d) {
-                let scaledPoints = albersProj([d['longitude'], d['latitude']])
-                return scaledPoints[1]
+                let points = albersProj([d['longitude'], d['latitude']])
+                return points[1]
             })
-            .attr('r', 7)
-            .attr("opacity", 0.5)
+            .attr('r', 8)
+            .attr("opacity", 0.45)
             .attr('fill', '#FF5A5F')
 
-            // user interaction: clicking on the location points -> points are disappeared
+            // User Interaction: clicking on the location circles -> circles are disappeared
             .on("click", function () {
                 d3.select(this)
                     .attr("opacity", 0.5)
