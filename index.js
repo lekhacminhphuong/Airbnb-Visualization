@@ -1,6 +1,6 @@
 const measurements = {
-    width: 800,
-    height: 600
+    width: 1000,
+    height: 700
 }
 
 // apend svg to the body
@@ -18,9 +18,9 @@ d3.json('nygeo.json').then(function (data) {
 
         // create NY map
         const albersProj = d3.geoAlbers()
-            .scale(190000)
-            .rotate([71.057, 0])
-            .center([0, 42.313])
+            .scale(90000)
+            .rotate([74.0060, 0])
+            .center([0, 40.7128])
             .translate([measurements.width / 2, measurements.height / 2]);
 
         // this code shows what albersProj really does
@@ -52,7 +52,8 @@ d3.json('nygeo.json').then(function (data) {
                 let scaledPoints = albersProj([d['longitude'], d['latitude']])
                 return scaledPoints[1]
             })
-            .attr('r', 5)
+            .attr('r', 4)
+            .attr("opacity", 0.9)
             .attr('fill', '#154360')
 
             // user interaction: clicking on the location points -> points are disappeared
