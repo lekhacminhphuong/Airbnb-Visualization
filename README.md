@@ -7,4 +7,7 @@ Click [me](https://lekhacminhphuong.github.io/Airbnb-Visualization/) to visit _A
 
 ## Development
 - Utilized D3.js to build a map of Airbnb locations in New York City.
+- When clicking on the locations circles, this circles will be disappeared
+- When hovering over areas, boroughs of New York City will be popup
+
 
